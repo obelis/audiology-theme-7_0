@@ -390,8 +390,7 @@ function geocoder(){
 
 
 	// writes geocodes to wp options database
-	/*
-update_option( 'lat1', $lat1 );
+	update_option( 'lat1', $lat1 );
 	update_option( 'lon1', $lon1 );
 	
 	update_option( 'lat2', $lat2 );
@@ -403,7 +402,6 @@ update_option( 'lat1', $lat1 );
 	update_option( 'lat4', $lat4 );
 	update_option( 'lon4', $lon4 );
 	
-*/
 	
 
 }
@@ -468,6 +466,8 @@ function home_mini_map( $atts ){
 		$location_select = $bubble4;
 	    break;
 	  default:
+	  $lat = get_option( 'lat1' );
+		$lon = get_option( 'lon1' );
 	    $location_select = $bubble1;
 	    if($display_2_location == 1){ $location_select .= ', '.$bubble2; }
 	    if($display_3_location == 1){ $location_select .= ', '.$bubble3; }
