@@ -557,3 +557,35 @@ function options_stylesheets_get_file_list( $directory_path, $filetype, $directo
 	}
 	return $alt_stylesheets;
 }
+
+// includes less php compiler
+require_once get_stylesheet_directory().'/inc/Less_php/Less.php';
+
+add_action('optionsframework_after_validate', 'less_compile'); // runs less_compile when business profiles is updated
+
+function less_compile(){
+	$parser = new Less_Parser();
+	// $parser->parseFile( get_stylesheet_directory().'/assets/less/build.less', '../../' );
+	$parser->parseFile( get_stylesheet_directory().'/assets/less/_bootstrap.less', '../../' );
+	$parser->parseFile( get_stylesheet_directory().'/assets/less/cerulean/variables.less', '../../' );
+	$parser->parseFile( get_stylesheet_directory().'/assets/less/cerulean/bootswatch.less', '../../' );
+	$parser->parseFile( get_stylesheet_directory().'/assets/less/main.less', '../../' );
+	$parser->ModifyVars( array(
+		'brand-primary'=>of_get_option('primary_color'),
+		'body-bg' =>of_get_option('body_background_color'),
+		'brand-info' =>'green',
+		'headings-color' =>'purple'
+	) );
+	
+	// $parser->parse( '@color: #4D926F; #header { color: @color; } h2 { color: @color; }' );
+
+	
+	$css = $parser->getCss();
+	
+	// writes css file
+	$myfile = fopen(get_stylesheet_directory()."/assets/css/styled/new_test/compiled_less.css", "w") or die("Unable to open file!");
+	fwrite($myfile, $css);
+	fclose($myfile);
+
+
+}

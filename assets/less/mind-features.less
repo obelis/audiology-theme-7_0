@@ -1,0 +1,139 @@
+/*-------------------------------------------------------------------*/
+/* Mind Features */
+/*-------------------------------------------------------------------*/
+
+
+.mind-features-item {
+    background-color: #eee;
+    border: solid 1px #ccc;
+    position: relative;
+    overflow: hidden;
+    height: 240px;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 90%;
+}
+
+.mind-features-item .item-icon {
+    text-align: center;
+    padding: 20px;
+}
+
+.mind-features-item i {
+ //   color: @brand-primary;
+    font-size: 9em;
+}
+
+.hover {
+    -webkit-user-select: none;
+    -webkit-touch-callout: none;
+}
+
+.mind-features-item .item-content {
+   // background-color: @brand-primary;
+    color: #fff;
+    padding: 20px;
+    height: 240px;
+    position: absolute;
+    z-index: 10;
+    top: 175px;
+    left: 0;
+    -webkit-transition: all .4s linear;
+    -moz-transition: all .4s linear;
+    -ms-transition: all .4s linear;
+    -o-transition: all .4s linear;
+    transition: all .4s linear;
+}
+
+.mind-features-item:hover .item-content,
+.mind-features-item.cs-hover .item-content {
+    top: 0
+}
+
+.mind-features-item .item-content h3 {
+    font-size: 1.3em;
+    text-align: center;
+    font-weight: 400;
+    margin: 5px 0 15px 0;
+    color: #fff;
+}
+
+@media (min-width: 768px) {
+    .mind-features-item {
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991px) { 
+
+    .mind-features-item i {
+    }
+
+    .mind-features-item .item-content {
+    }
+
+    .mind-features-item .item-content h3 {
+        font-size: 1.4em;
+        margin: 0px 0 15px 0;
+    }
+
+    .mind-features-item .item-content {
+    }
+}
+
+@media (min-width: 992px) { 
+    .mind-features-item .item-content {
+        font-size: .9em;
+        line-height: 1.6em;
+    }
+
+    .mind-features-item i {
+        font-size: 9em
+    }
+
+    .mind-features-item .item-content h3 {
+        font-size: 1.3em;
+        margin: 5px 0 20px 0;
+    }
+}
+
+@media (min-width: 1200px) { 
+    .mind-features-item {
+    }
+
+    .mind-features-item .item-content {
+        line-height: 1.7em
+    }
+
+    .mind-features-item i {
+        font-size: 9em
+    }
+}
+
+/**** fixs ****/
+#header-top-right h2 span{
+color: #036;
+font-size: 19px;
+font-weight: bold;
+}
+
+#header-top h2 {
+text-align: right;
+}
+#header-main {
+padding: 20px 0;
+}
+.day-hours {
+    display: inline;
+}
+
+/*** maps ***/
+.hours li span {
+    font-weight: 700;
+    width: 50px;
+    display: inline-block;
+} 
+div.map, #googleMap{
+    height:300px;
+    color: black;
+}
