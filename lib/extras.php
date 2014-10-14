@@ -564,17 +564,40 @@ require_once get_stylesheet_directory().'/inc/Less_php/Less.php';
 add_action('optionsframework_after_validate', 'less_compile'); // runs less_compile when business profiles is updated
 
 function less_compile(){
+	
+	$theme = 'journal';
+	
+	// grabs form values from POST
+	$template = get_template();
+	// var_dump($_POST);
+	$template = str_replace("-","_",$template);
+	
+	foreach ($_POST[$template] as $key => $val) {
+	   // echo 'key= '.$key.'<br />';
+	   // echo 'val = '.$val.'<br /><br />';
+	    if($key == 'primary_color'){
+		    $primary_color = $val;
+	    }
+	    if($key == 'body_background_color'){
+		    $body_background_color = $val;
+	    }
+		if($key == 'secondary_color'){
+		    $secondary_color = $val;
+	    }
+	}
+	
+	// compiles less to css
 	$parser = new Less_Parser();
 	// $parser->parseFile( get_stylesheet_directory().'/assets/less/build.less', '../../' );
 	$parser->parseFile( get_stylesheet_directory().'/assets/less/_bootstrap.less', '../../' );
-	$parser->parseFile( get_stylesheet_directory().'/assets/less/cerulean/variables.less', '../../' );
-	$parser->parseFile( get_stylesheet_directory().'/assets/less/cerulean/bootswatch.less', '../../' );
+	$parser->parseFile( get_stylesheet_directory().'/assets/less/'.$theme.'/variables.less', '../../' );
+	$parser->parseFile( get_stylesheet_directory().'/assets/less/'.$theme.'/bootswatch.less', '../../' );
 	$parser->parseFile( get_stylesheet_directory().'/assets/less/main.less', '../../' );
 	$parser->ModifyVars( array(
-		'brand-primary'=>of_get_option('primary_color'),
-		'body-bg' =>of_get_option('body_background_color'),
-		'brand-info' =>'green',
-		'headings-color' =>'purple'
+		'brand-primary'		=>	$primary_color,
+		'body-bg' 			=>	$body_background_color,
+		'brand-info' 		=>	$secondary_color,
+		'headings-color'	=>	$primary_color
 	) );
 	
 	// $parser->parse( '@color: #4D926F; #header { color: @color; } h2 { color: @color; }' );
