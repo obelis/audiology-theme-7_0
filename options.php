@@ -196,8 +196,7 @@ function optionsframework_options() {
 
 	
 	
-	// If using image radio buttons, define a directory path
-	$imagepath =  get_template_directory_uri() . '/images/';
+
 
 	$options = array();
 
@@ -1705,12 +1704,53 @@ function optionsframework_options() {
 	// Generated list of stylesheets in the "CSS" directory
 	// Use template_directory paths if you're using a parent theme
 		
+/*
 	$alt_stylesheets = options_stylesheets_get_file_list(
-		get_stylesheet_directory() . '/assets/css/styled/', // $directory_path
-		'css', // $filetype
-		get_stylesheet_directory_uri() . '/assets/css/styled/' // $directory_uri
+		get_stylesheet_directory() . '/assets/less/', // $directory_path
+		'*', // $filetype
+		get_stylesheet_directory_uri() . '/assets/less/' // $directory_uri
 	);
 	
+*/
+	// If using image radio buttons, define a directory path
+	$imagepath =  get_template_directory_uri() . '/assets/less/';
+	
+	$options[] = array(
+		'name' => "Example Image Selector",
+		'desc' => "Images for layout.",
+		'id' => "theme_img",
+		'std' => "2c-l-fixed",
+		'type' => "images",
+		'options' => array(
+			'amelia' => $imagepath . 'amelia/thumbnail.png',
+			'cerulean' => $imagepath . 'cerulean/thumbnail.png',
+			'cosmo' => $imagepath . 'cosmo/thumbnail.png',
+			'cyborg' => $imagepath . 'cyborg/thumbnail.png',
+			'darkly' => $imagepath . 'darkly/thumbnail.png',
+			'flatly' => $imagepath . 'flatly/thumbnail.png',
+			'journal' => $imagepath . 'journal/thumbnail.png',
+			'lumen' => $imagepath . 'lumen/thumbnail.png',
+			'paper' => $imagepath . 'paper/thumbnail.png',
+			'readable' => $imagepath . 'readable/thumbnail.png',
+			'sandstone' => $imagepath . 'sandstone/thumbnail.png',
+			'simplex' => $imagepath . 'simplex/thumbnail.png',
+			'slate' => $imagepath . 'slate/thumbnail.png',
+			'spacelab' => $imagepath . 'spacelab/thumbnail.png',
+			'superhero' => $imagepath . 'superhero/thumbnail.png',
+			'united' => $imagepath . 'united/thumbnail.png',
+			'yeti' => $imagepath . 'yeti/thumbnail.png',
+			'cosmo' => $imagepath . 'cosmo/thumbnail.png')
+	);
+
+
+	$alt_stylesheets = array(
+		"0" => "Default", // There is no "default" stylesheet to load
+		'amelia' => "amelia",
+		'cosmo' => "cosmo",
+		'cyborg' => "cyborg",
+		'/css/pei/styles.css' => "pei"		
+	);
+		
 	$options[] = array( 
 		"name" => "Theme Style",
 		"desc" => 'In this example the css files in the "css" directory are automatically loaded into the option.',

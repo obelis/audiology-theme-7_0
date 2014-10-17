@@ -178,6 +178,7 @@ a.nav-tab-active:hover{
 	display:none;
 	cursor:pointer;
 	float:left;
+	width: 360px;
 }
 #optionsframework .controls .of-radio-img-selected {
 	border:3px solid #ccc
