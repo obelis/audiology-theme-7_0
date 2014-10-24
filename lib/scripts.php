@@ -24,8 +24,11 @@ function roots_scripts() {
 	// $style_css = of_get_option('auto_stylesheet');
 	
 	}
-	$style_css = get_stylesheet_directory_uri().'/assets/css/compiled_style.css';
-	
+//	$style_css = get_stylesheet_directory_uri().'/assets/css/compiled_style.css';
+
+	wp_register_style('myStyleSheet', get_stylesheet_directory_uri().'/assets/css/compiled_style.css.php');
+	wp_enqueue_style( 'myStyleSheet');
+
 
 // add_action( 'wp_enqueue_scripts', 'options_stylesheets_alt_style' );
    

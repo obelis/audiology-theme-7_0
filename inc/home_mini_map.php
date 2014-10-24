@@ -107,14 +107,14 @@ echo $location_select;
     
 <?php if (isset($second_phone_number) && $second_phone_number!='' && $map_bounds=='show'){ ?>
         
-    //  Make an array of the LatLng's of the markers you want to show
-var LatLngList = new Array (new google.maps.LatLng (<?php echo json_encode($lon1); ?>, <?php echo json_encode($lat1); ?>)<?php echo $bound2.$bound3.$bound4; ?> );
-//  Create a new viewpoint bound
-var bounds = new google.maps.LatLngBounds ();
-//  Go through each...
-for (var i = 0, LtLgLen = LatLngList.length; i < LtLgLen; i++) {
-  //  And increase the bounds to take this point
-  bounds.extend (LatLngList[i]);
+	//  Make an array of the LatLng's of the markers you want to show
+	var LatLngList = new Array (new google.maps.LatLng (<?php echo json_encode($lon1); ?>, <?php echo json_encode($lat1); ?>)<?php echo $bound2.$bound3.$bound4; ?> );
+	//  Create a new viewpoint bound
+	var bounds = new google.maps.LatLngBounds ();
+	//  Go through each...
+	for (var i = 0, LtLgLen = LatLngList.length; i < LtLgLen; i++) {
+	//  And increase the bounds to take this point
+	bounds.extend (LatLngList[i]);
   
 }
 

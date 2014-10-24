@@ -1676,7 +1676,14 @@ function optionsframework_options() {
 		'std' => '',
 		'class' => '',
 		'type' => 'textarea');
-								
+	
+	$options[] = array(
+		'name' => __('Custom CSS', 'options_check'),
+		'desc' => __('Enter css here', 'options_check'),
+		'id' => 'custom_css',
+		'std' => '',
+		'type' => 'textarea');
+										
 	$options[] = array(
 		'name' => __('Primary Color', 'options_check'),
 		'desc' => __('Use ColorPicker or Type Hex Color, (ie&nbsp;#333333)

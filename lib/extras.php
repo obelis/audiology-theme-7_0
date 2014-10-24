@@ -390,8 +390,9 @@ function geocoder(){
 
 
 	// writes geocodes to wp options database
-	/*
-update_option( 'lat1', $lat1 );
+
+/*
+	update_option( 'lat1', $lat1 );
 	update_option( 'lon1', $lon1 );
 	
 	update_option( 'lat2', $lat2 );
@@ -402,8 +403,9 @@ update_option( 'lat1', $lat1 );
 	
 	update_option( 'lat4', $lat4 );
 	update_option( 'lon4', $lon4 );
-	
 */
+	
+
 	
 
 }
@@ -427,12 +429,18 @@ function home_mini_map( $atts ){
 	$lat1 = get_option( 'lat1' );
 	$lon1 = get_option( 'lon1' );
 
-	$lat2 = get_option( 'lat2' );
-	$lon2 = get_option( 'lon2' );
+	$lat2ck = get_option( 'lat2' );
+	$lon2ck = get_option( 'lon2' );
+	
+	$lat2 = (isset($lat2ck) && $lat2ck != '' ? $lat2ck : NULL);
+	$lon2 = (isset($lon2ck) && $lon2ck != '' ? $lon2ck : NULL);
 	
 
-	$lat3 = get_option( 'lat3' );
-	$lon3 = get_option( 'lon3' );
+	$lat3ck = get_option( 'lat3' );
+	$lon3ck = get_option( 'lon3' );
+	
+	$lat3 = (isset($lat3ck) && $lat3ck != '' ? $lat3ck : NULL);
+	$lon3 = (isset($lon3ck) && $lon3ck != '' ? $lon3ck : NULL);
 	
 	$lat4ck = get_option( 'lat4' );
 	$lon4ck = get_option( 'lon4' );
@@ -468,13 +476,19 @@ function home_mini_map( $atts ){
 		$location_select = $bubble4;
 	    break;
 	  default:
-	    $location_select = $bubble1;
-	    if($display_2_location == 1){ $location_select .= ', '.$bubble2; }
-	    if($display_3_location == 1){ $location_select .= ', '.$bubble3; }
-	    if($display_4_location == 1){ $location_select .= ', '.$bubble4; }
-	    
-	    $map_bounds = "show";
-
+	  	if($display_2_location != 1){
+			$lat = get_option( 'lat1' );
+			$lon = get_option( 'lon1' );
+			$location_select = $bubble1;	
+	  	} else {
+	  
+		    $location_select = $bubble1;
+		    if($display_2_location == 1){ $location_select .= ', '.$bubble2; }
+		    if($display_3_location == 1){ $location_select .= ', '.$bubble3; }
+		    if($display_4_location == 1){ $location_select .= ', '.$bubble4; }
+		    $map_bounds = "show";
+		
+		}
 	}
 	
 	
@@ -535,7 +549,7 @@ function sc_post_list($atts, $content = null)
     $result .= '</ul>';
     return $result;
 }
-
+add_image_size( 'post_list', 80, 80, true );
 add_shortcode("post-list", "sc_post_list");
 
 /**
@@ -559,7 +573,7 @@ function options_stylesheets_get_file_list( $directory_path, $filetype, $directo
 }
 
 // includes less php compiler
-require_once get_stylesheet_directory().'/inc/Less_php/Less.php';
+require_once get_stylesheet_directory().'/inc/less_php/Less.php';
 
 add_action('optionsframework_after_validate', 'less_compile'); // runs less_compile when business profiles is updated
 
@@ -624,3 +638,14 @@ function less_compile(){
 
 
 }
+// gets image id
+function kd_get_attachment_id($image_url) {
+global $wpdb;
+$prefix = $wpdb->prefix;
+$attachment = $wpdb->get_col($wpdb->prepare("SELECT ID FROM " . $prefix . "posts" . " WHERE guid='" . $image_url . "';", ""));
+return $attachment[0];
+}
+
+
+
+
