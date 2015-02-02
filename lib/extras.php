@@ -391,7 +391,7 @@ function geocoder(){
 
 	// writes geocodes to wp options database
 
-/*
+
 	update_option( 'lat1', $lat1 );
 	update_option( 'lon1', $lon1 );
 	
@@ -403,7 +403,7 @@ function geocoder(){
 	
 	update_option( 'lat4', $lat4 );
 	update_option( 'lon4', $lon4 );
-*/
+
 	
 
 	
@@ -449,10 +449,10 @@ function home_mini_map( $atts ){
 	$lon4 = (isset($lon4ck) && $lon4ck != '' ? $lon4ck : NULL);
 
 	
-	$bubble1 = '[\'<h4>'.$company_name.'</h4><a href=\"https://www.google.com/maps/dir/Current+Location/'.$lon1.','.$lat1.'\"><span style=\"font-weight:bold;\">'.$main_street.'</span><br />'.$main_city.', '.$main_state.' '.$main_zip.'</a>\','.json_encode($lon1).', '.json_encode($lat1).']';
-	$bubble2 = '[\'<h4>'.$company_name.'</h4><a href=\"https://www.google.com/maps/dir/Current+Location/'.$lon2.','.$lat2.'\"><span style=\"font-weight:bold;\">'.$second_street.'</span><br />'.$second_city.', '.$second_state.' '.$second_zip.'</a>\','.json_encode($lon2).', '.json_encode($lat2).']';
-	$bubble3 = '[\'<h4>'.$company_name.'</h4><a href=\"https://www.google.com/maps/dir/Current+Location/'.$lon3.','.$lat3.'\"><span style=\"font-weight:bold;\">'.$third_street.'</span><br />'.$third_city.', '.$third_state.' '.$third_zip.'</a>\','.json_encode($lon3).', '.json_encode($lat3).']';
-	$bubble4 = '[\'<h4>'.$company_name.'</h4><a href=\"https://www.google.com/maps/dir/Current+Location/'.$lon4.','.$lat4.'\"><span style=\"font-weight:bold;\">'.$fourth_street.'</span><br />'.$fourth_city.', '.$fourth_state.' '.$fourth_zip.'</a>\','.json_encode($lon4).', '.json_encode($lat4).']';
+	$bubble1 = '[\'<h5>'.$company_name.'</h5><a href=\"https://www.google.com/maps/dir/Current+Location/'.$lon1.','.$lat1.'\"><span style=\"font-weight:bold;\">'.$main_street.'</span><br />'.$main_city.', '.$main_state.' '.$main_zip.'</a>\','.json_encode($lon1).', '.json_encode($lat1).']';
+	$bubble2 = '[\'<h5>'.$company_name.'</h5><a href=\"https://www.google.com/maps/dir/Current+Location/'.$lon2.','.$lat2.'\"><span style=\"font-weight:bold;\">'.$second_street.'</span><br />'.$second_city.', '.$second_state.' '.$second_zip.'</a>\','.json_encode($lon2).', '.json_encode($lat2).']';
+	$bubble3 = '[\'<h5>'.$company_name.'</h5><a href=\"https://www.google.com/maps/dir/Current+Location/'.$lon3.','.$lat3.'\"><span style=\"font-weight:bold;\">'.$third_street.'</span><br />'.$third_city.', '.$third_state.' '.$third_zip.'</a>\','.json_encode($lon3).', '.json_encode($lat3).']';
+	$bubble4 = '[\'<h5>'.$company_name.'</h5><a href=\"https://www.google.com/maps/dir/Current+Location/'.$lon4.','.$lat4.'\"><span style=\"font-weight:bold;\">'.$fourth_street.'</span><br />'.$fourth_city.', '.$fourth_state.' '.$fourth_zip.'</a>\','.json_encode($lon4).', '.json_encode($lat4).']';
 	
 	switch ($a['location']) {
 	  case "1":
@@ -504,53 +504,7 @@ add_shortcode('map', 'home_mini_map');
 
 
 
-function sc_section_title($atts, $content = null)
-{
-    extract(shortcode_atts(array(
-        "level" => '3'
-    ), $atts));
 
-    return '<h'.$level.' class="section-title">'.$content.'</h'.$level.'>';
-}
-
-add_shortcode("section-title", "sc_section_title");
-
-
-function sc_post_list($atts, $content = null)
-{
-    $result = '<ul class="media-list">';
-    extract(shortcode_atts(array(
-    ), $atts));
-
-    $thumbnails = get_posts($atts);
-    foreach ($thumbnails as $thumbnail) {
-        if ( has_post_thumbnail($thumbnail->ID)) {
-            $thumb = get_the_post_thumbnail($thumbnail->ID, 'post_list');
-        }
-        else {
-            $thumb = '<img src="' . get_template_directory_uri() . '/img/no_image_80.png" class="img-responsive" alt="No image">';
-        }
-        $result .= '<li class="media">';
-        $result .= '<a href="' . get_permalink( $thumbnail->ID ) . '" title="' . esc_attr( $thumbnail->post_title ) . '" class="pull-left media-object">';
-        $result .= $thumb;
-        $result .= '</a>';
-        $result .= '<div class="media-body">';
-        $result .= '<p class="media-heading">';
-        $result .= '<a href="' . get_permalink( $thumbnail->ID ) . '" title="' . esc_attr( $thumbnail->post_title ) . '">';
-        $result .= get_the_title($thumbnail->ID);
-        $result .= '</a>';
-        $result .= '</p>';
-        $result .= '<small>';
-        $result .= get_the_time('M d, Y', $thumbnail);
-        $result .= '</small>';
-        $result .= '</div>';
-    }
-
-    $result .= '</ul>';
-    return $result;
-}
-add_image_size( 'post_list', 80, 80, true );
-add_shortcode("post-list", "sc_post_list");
 
 /**
  * Returns an array of all files in $directory_path of type $filetype.
@@ -647,5 +601,36 @@ return $attachment[0];
 }
 
 
+add_filter( 'the_title', 'do_shortcode' );
 
+// Add specific CSS class by filter
+add_filter( 'body_class', 'my_class_names' );
+function my_class_names( $classes ) {
+	$nav_style = of_get_option('nav_style');
+	// add 'class-name' to the $classes array
+	$classes[] = $nav_style.'_nav';
+	// return the $classes array
+	return $classes;
+}
 
+// sets responsive class to post imgs
+function add_responsive_class($content){
+
+        $content = mb_convert_encoding($content, 'HTML-ENTITIES', "UTF-8");
+        $document = new DOMDocument();
+        if (isset($content) && $content == "" ){
+	       $content = " ";
+        }
+        libxml_use_internal_errors(true);
+        $document->loadHTML(utf8_decode($content));
+
+        $imgs = $document->getElementsByTagName('img');
+        foreach ($imgs as $img) {           
+			$existing_class = $img->getAttribute('class');
+			$img->setAttribute('class', "img-responsive $existing_class");
+        }
+
+        $html = $document->saveHTML();
+        return $html;   
+}
+add_filter('the_content', 'add_responsive_class');

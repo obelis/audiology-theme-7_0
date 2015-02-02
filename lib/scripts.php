@@ -32,12 +32,13 @@ function roots_scripts() {
 
 // add_action( 'wp_enqueue_scripts', 'options_stylesheets_alt_style' );
    
- //  echo "<h1>".$style_css."</h1>";
+
       
   if (WP_ENV === 'development') {
     $assets = array(
       'css'       => $style_css,
       'js'        => '/assets/js/scripts.js',
+      'jscustom'        => '/assets/js/scripts-custom.js',
       'modernizr' => '/assets/vendor/modernizr/modernizr.js',
       'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.js'
     );
@@ -47,6 +48,7 @@ function roots_scripts() {
     $assets     = array(
       'css'       => '/assets/css/main.min.css?' . $assets['assets/css/main.min.css']['hash'],
       'js'        => '/assets/js/scripts.min.js?' . $assets['assets/js/scripts.min.js']['hash'],
+      'jscustom'  => '/assets/js/scripts-custom.js',
       'modernizr' => '/assets/js/vendor/modernizr.min.js',
       'jquery'    => '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js'
     );
@@ -74,6 +76,7 @@ function roots_scripts() {
   wp_enqueue_script('modernizr', get_template_directory_uri() . $assets['modernizr'], array(), null, false);
   wp_enqueue_script('jquery');
   wp_enqueue_script('roots_js', get_template_directory_uri() . $assets['js'], array(), null, true);
+  wp_enqueue_script('roots_js_custom', get_template_directory_uri() . $assets['jscustom'], array(), null, true);
   wp_enqueue_script('gmaps', '//maps.googleapis.com/maps/api/js?key=AIzaSyCJIUm-gWhV6ryPy1bqfiCz4cQ1ZuB-okc&sensor=false', array(), null, false);
   
 }
